@@ -63,5 +63,5 @@ def registration_view(request):
 def my_recommendations_view(request, pk):
     profile = Profile.objects.get(user_id=pk)
     my_recs = profile.get_recommended_profiles()
-    my_recs_json = serializers.serialize('json', my_recs)
-    return Response(my_recs_json,status=status.HTTP_200_OK)
+    spec_list = {','.join(str(v) for v in my_recs)}
+    return Response(spec_list,status=status.HTTP_200_OK)
