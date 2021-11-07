@@ -9,10 +9,29 @@ from api.models import Profile
 
 @api_view(['POST', 'GET', ])
 def home(request, *args, **kwargs):
+    """
+    retrieve:
+        Return a user instance.
+
+    list:
+        Return all users, ordered by most recently joined.
+
+    create:
+        Create a new user.
+
+    delete:
+        Remove an existing user.
+
+    partial_update:
+        Update one or more fields on an existing user.
+
+    update:
+        Update a user.
+    """
     code = str(kwargs.get('ref_code'))
     data = {}
+    profile = Profile.objects.get(code=code)
     try:
-        profile = Profile.objects.get(code=code)
         request.session['ref_profile'] = profile.id
         serializer = UserSerializer(data=request.data)
         data = {}
