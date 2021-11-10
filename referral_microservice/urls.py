@@ -18,7 +18,7 @@ from django.urls import path
 from rest_framework.schemas import get_schema_view
 from rest_framework_swagger.views import get_swagger_view
 from api import views
-from api.views import my_recommendations_view, home
+from api.views import my_recommendations_view, request_view
 
 schema_view = get_swagger_view(title='Pastebin API')
 
@@ -27,5 +27,6 @@ urlpatterns = [
     path('register/', views.registration_view, name='register'),
     path('', schema_view, name='docs'),
     path('profiles/<int:pk>/', my_recommendations_view, name='my_recommendations_view'),
-    path('<str:ref_code>/', home, name='home'),
+    # path('<str:ref_code>/', home, name='home'),
+    path('req/', request_view, name='request_view'),
 ]

@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -22,3 +23,16 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('recommended_by',)
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        user = authenticate(**data)
+
+        if user and user.is_active:
+            return user
+
+        raise serializers.ValidationError('Incorrect credentials')
